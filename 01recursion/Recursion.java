@@ -1,10 +1,10 @@
 public class Recursion{
 
-    public String name(){
+    public static String name(){
 	return "Zheng,Andy";
     }
 
-    public int fact(int n){
+    public static int fact(int n){
 	if (n<0){
 	    throw new IllegalArgumentException();
 	}
@@ -14,7 +14,7 @@ public class Recursion{
 	return n * fact(n-1);
     }
 
-    public int fib(int n){
+    public static int fib(int n){
 	if (n<0){
 	    throw new IllegalArgumentException();
 	}
@@ -27,17 +27,24 @@ public class Recursion{
 	return fib(n-1)+fib(n-2);
     }
 
-    public double sqrt(double n){
+    public static double sqrt(double n){
 	if (n<0){
 	    throw new IllegalArgumentException();
 	}
-	return sqrth(n, 1);
+	return sqrth(n, n/2.0);
     }
 
-    public double sqrth(doule n, double guess){
-	if ((n/guess+guess)/2 - guess < .00001){
+    public static double sqrth(double n, double guess){
+	if ((n/guess+guess)/2 - guess < .0001){
 	    return guess;
 	}
 	return sqrth(n, ((n/guess+guess)/2));
+    }
+
+    public static void main(String[] args){
+	System.out.println(fib(5));
+	System.out.println(fib(10));
+	System.out.println(fact(4));
+	System.out.println(sqrt(100));
     }
 }
