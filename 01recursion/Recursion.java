@@ -18,24 +18,25 @@ public class Recursion{
 	if (n<0){
 	    throw new IllegalArgumentException();
 	}
-	if (n == 1){
+	if (n == 0){
 	    return 0;
+	}else {
+	    if (n==1){
+		return 1;
+	    }
 	}
-	if (n == 2){
-	    return 1;
-	}
-	return fib(n-1)+fib(n-2);
+	return fib(n-1) + fib(n-2);
     }
 
     public static double sqrt(double n){
 	if (n<0){
 	    throw new IllegalArgumentException();
 	}
-	return sqrth(n, n/2.0);
+	return sqrth(n, 1);
     }
 
     public static double sqrth(double n, double guess){
-	if ((n/guess+guess)/2 - guess < .0001){
+	if (Math.abs((n/guess+guess)/2 - guess) < .00001){
 	    return guess;
 	}
 	return sqrth(n, ((n/guess+guess)/2));
@@ -45,6 +46,6 @@ public class Recursion{
 	System.out.println(fib(5));
 	System.out.println(fib(10));
 	System.out.println(fact(4));
-	System.out.println(sqrt(100));
+	System.out.println(sqrt(169));
     }
 }
