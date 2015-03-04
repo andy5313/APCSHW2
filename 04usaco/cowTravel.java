@@ -5,7 +5,7 @@ public class cowTravel{
     private File input;
     private Scanner scan;
     private String[][]field;
-    private int r,c,startr,startc,endr,endc,steps,count;
+    private int r,c,startr,startc,endr,endc,ways,seconds;
 
     public cowTravel(){
 	try{
@@ -13,8 +13,10 @@ public class cowTravel{
 	    scan = new Scanner(input);
 	} catch (Exception e){}
 	
-	field = new String[scan.nextInt()][scan.nextInt()];
-	steps = scan.nextInt();
+	r = scan.nextInt();
+	c = scan.nextInt();
+	field = new String[r][c];
+	seconds = scan.nextInt();
 	
 	for (int x = 0; x < field.length; x ++){
 	    for (int y = 0; y < field[0].length; y++){
@@ -26,26 +28,32 @@ public class cowTravel{
 	startc = scan.nextInt() - 1;
 	endr = scan.nextInt() - 1;
 	endc = scan.nextInt() - 1;
+	ways = 0;
     }
 
     public int solve(){
-        this.solve(startr,startc,0);
-	return count;
+        solve(startr,startc,0);
+	return ways;
     }
 	
     
-    public void solve(int r,int c,int seconds){
-	if (r<field.length && r >=0 && c<field[0].length && c>=0 && seconds <= steps){
-	    if (seconds == steps && r == endr && c == endc){
-		count++;
-	    }
-	    if (field[r][c].equals(".")){
-		solve(r+1,c,seconds+1);
-		solve(r,c+1,seconds+1);
-		solve(r-1,c,seconds+1);
-		solve(r,c-1,seconds+1);
-	    }
+    public void solve(int x,int y,int steps){
+	if (x<0|| y <0 || x >= r || y >= c || steps > seconds){
+	    return;
 	}
+	if (x == endr && y ==endc && steps == seconds){
+	    ways++;
+	    return;
+	}
+	if (field[x][y].equals("*")){
+	    return;
+	}
+	solve(x+1,c,steps+1);
+	solve(x,c+1,steps+1);
+	solve(r-1,c,steps+1);
+	solve(r,c-1,steps+1);
+	    
+	
     }
 
 
