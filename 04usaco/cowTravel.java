@@ -32,26 +32,26 @@ public class cowTravel{
     }
 
     public int solve(){
-        solve(startr,startc,0);
+        solve(startr,startc,seconds);
 	return ways;
     }
 	
     
     public void solve(int x,int y,int steps){
-	if (x<0|| y <0 || x >= r || y >= c || steps > seconds){
+	if (x<0|| y <0 || x >= field[0].length || y<0 || y >= field.length){
 	    return;
 	}
-	if (x == endr && y ==endc && steps == seconds){
+	if (x == endr && y ==endc && steps == 0){
 	    ways++;
 	    return;
 	}
-	if (field[x][y].equals("*")){
+	if (field[x][y].equals("*") || steps ==0){
 	    return;
 	}
-	solve(x+1,c,steps+1);
-	solve(x,c+1,steps+1);
-	solve(r-1,c,steps+1);
-	solve(r,c-1,steps+1);
+	solve(x+1,c,steps-1);
+	solve(x,c+1,steps-1);
+	solve(r-1,c,steps-1);
+	solve(r,c-1,steps-1);
 	    
 	
     }
