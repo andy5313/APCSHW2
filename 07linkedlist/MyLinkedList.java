@@ -52,7 +52,27 @@ public class MyLinkedList{
     }
 
     public boolean add(int index, int value){
-
+	if (index < 0 || index >= size){
+	    throw new IndexOutOfBoundsException();
+	}
+	LNode add = new LNode(value);
+	if (index == 0){
+	    add.setNext(head);
+	    head = add;
+	} else if (index == size() -1) {
+	    add(value);
+	} else {
+	    LNode temp = head;
+	    for (int i = 0; i < index -1; i ++){
+		temp = temp.getNext();
+	    }
+	    LNode next = temp.getNext();
+	    temp.setNext(add);
+	    add.setNext(next);
+	}
+	size ++;
+	return true;
+	
     }
     public int remove(int index){
 
