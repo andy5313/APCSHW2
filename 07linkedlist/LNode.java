@@ -2,7 +2,7 @@ public class LNode<T>{
     private T value;
     private LNode<T> next;
 
-    puvlic LNode(){
+    public LNode(){
 
     }
     public LNode(T Value){

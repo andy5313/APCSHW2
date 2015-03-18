@@ -12,7 +12,7 @@ public class MyLinkedList<T>{
     }
     
     public String toString(){
-	Strings ans = "[ ";
+	String ans = "[ ";
 	LNode<T> temp = head;
 	while(temp!= null){
 	    ans += temp.getValue() + ",";
@@ -46,7 +46,7 @@ public class MyLinkedList<T>{
 	    head = next;
 	} else {
 	    LNode<T> temp = head;
-	    for (int i = 0; i < size ; i++){
+	    for (int i = 0; i < size-1 ; i++){
 		temp = temp.getNext();
 	    }
 	    temp.setNext(next);
@@ -78,13 +78,10 @@ public class MyLinkedList<T>{
 	return true;
 	
     }
-    public T remove(int index){
-
-    }
 
     public int indexOf(T value){
 	LNode<T> temp = head;
-	for (int i = 0; int i < size; i ++){
+	for (int i = 0; i < size; i ++){
 	    if (temp.getValue() == value){
 		return i;
 	    }
@@ -98,6 +95,12 @@ public class MyLinkedList<T>{
     }
 
     public static void main(String[] args){
-	
+	MyLinkedList<Integer> list = new MyLinkedList<Integer>();
+	list.add(5);
+	list.add(10);
+	list.add(2);
+	list.add(7);
+	list.add(8);
+	System.out.println(list);
     }
 }
