@@ -3,6 +3,7 @@ import java.util.*;
 public class MyDeque<T>{
     private int head,tail,size;
     private Object[] array;
+    private int[] priority;
 
     public String name(){
 	return "andy.zheng";
@@ -101,6 +102,32 @@ public class MyDeque<T>{
 	    }
 	}
 	return s + "]";
+    }
+
+    public void add(T value, int p){
+	if (size == array.length){
+	    expand();
+	    expandPriority();
+	}
+	addLast(value);
+	priority[tail] = p;
+    }
+
+    public void expandPriority(){
+	int[] a = new int[array.length * 2];
+	if (head < tail){
+	    for (int i = head; i <= tail; i ++){
+		a[i] = priority[i];
+	    }
+	}else{
+	    for (int i = head; i < priority.length; i ++){
+		a[i] = priority[i];
+	    }
+	    for (int i = 0; i <= tail; i ++){
+		a[i + priority.length] = priority[i];
+	    }
+	}
+        priority = a;
     }
 
     public static void main(String[] args){
