@@ -16,6 +16,10 @@ public class MyDeque<T>{
 	size = 0;
     }
 
+    public boolean isEmpty(){
+	return size == 0;
+    }
+
     public void addFirst(T value){
 	if (size == array.length){
 	    expand();
@@ -172,6 +176,8 @@ public class MyDeque<T>{
 	return (T)remove;
 
     }
+
+    
 
     public static void main(String[] args){
 	
