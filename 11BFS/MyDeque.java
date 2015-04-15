@@ -10,6 +10,7 @@ public class MyDeque<T>{
     }
     public MyDeque(){
 	array = new Object[10];
+	priority = new int[10];
 	head = 4;
 	tail = 5;
 	size = 0;
@@ -128,6 +129,48 @@ public class MyDeque<T>{
 	    }
 	}
         priority = a;
+    }
+
+    public T removeSmallest(){
+	if (size == 0){
+	    throw new NoSuchElementException();
+	}
+	int smallest = priority[head];
+	int index = head;
+        Object remove = array[head];
+	if (head < tail){
+	    for (int i = head; i <= tail; i ++){
+		if (priority[i] < smallest){
+		    smallest = priority[i];
+		    index = i;
+		    remove = array[i];
+		}
+	    }
+	}else{
+	    for (int i = head; i < priority.length; i ++){
+		if (priority[i] < smallest){
+		    smallest = priority[i];
+		    index = i;
+		    remove = array[i];
+		}
+	    }
+	    for (int i = 0; i <= tail; i ++){
+		if (priority[i] < smallest){
+		    smallest = priority[i];
+		    index = i;
+		    remove = array[i];
+		}
+	    }
+	}
+	array[index] = array[head];
+	priority[index] = priority[head];
+	head ++;
+	if (head == array.length){
+	    head = 0;
+	}
+	size --;
+	return (T)remove;
+
     }
 
     public static void main(String[] args){
