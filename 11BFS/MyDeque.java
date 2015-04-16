@@ -16,10 +16,6 @@ public class MyDeque<T>{
 	size = 0;
     }
 
-    public boolean isEmpty(){
-	return size == 0;
-    }
-
     public void addFirst(T value){
 	if (size == array.length){
 	    expand();
@@ -176,8 +172,25 @@ public class MyDeque<T>{
 	return (T)remove;
 
     }
-
     
+    public boolean solveDFS(){
+	return solve(0,false);
+    }
+
+    public boolean solveBFS(){
+	return solve(1, false);
+    }
+
+    public boolean solveDFS(boolean animate){
+	return (0, animate);
+    }
+
+    public boolean solveBFS(boolean animate){
+	return solve(1, animate);
+    }
+
+
+
 
     public static void main(String[] args){
 	
