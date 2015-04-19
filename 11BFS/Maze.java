@@ -123,20 +123,20 @@ public class Maze{
 		    solveNum ++;
 		    c = c.getPrev();
 		}
-		//System.out.println(solveLen);
+
 		clearPath();
 		addSolution();
 		System.out.println(toString());
 		return true;
 	    }else{
 		maze[x][y] = '.';
-		Coordinate[] candidates = new Coordinate[]{
+		Coordinate[] nextMoves = new Coordinate[]{
 		    new Coordinate(x-1, y, current.getStepsTaken()+1),
 		    new Coordinate(x+1, y, current.getStepsTaken()+1),
 		    new Coordinate(x, y-1, current.getStepsTaken()+1),
 		    new Coordinate(x, y+1, current.getStepsTaken()+1),
 		};
-		for (Coordinate cord : candidates){
+		for (Coordinate cord : nextMoves){
 		    cord.setPrev(current);
 		    int cx = cord.getX();
 		    int cy = cord.getY();
