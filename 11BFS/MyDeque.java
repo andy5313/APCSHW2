@@ -2,42 +2,45 @@ import java.util.*;
 
 public class MyDeque<T>{
     private int head,tail,size;
-    private Object[] array;
+    private Object[] d;
     private int[] priority;
 
     public String name(){
 	return "andy.zheng";
     }
     public MyDeque(){
-	array = new Object[10];
+	d = new Object[10];
 	priority = new int[10];
-	head = 4;
-	tail = 5;
+	head = 5;
+	tail = 4;
 	size = 0;
     }
 
+    public boolean isEmpty(){
+	return size == 0;
+    }
     public void addFirst(T value){
-	if (size == array.length){
+	if (size == d.length){
 	    expand();
 	}
 	head--;
 	if (head == -1){
-	    head = array.length-1;
+	    head = d.length-1;
 	}
-	array[head] = value;
+	d[head] = value;
 	size++;
 
     }
 
     public void addLast(T value){
-	if (size == array.length){
+	if (size == d.length){
 	    expand();
 	}
 	tail++;
-	if(tail == array.length){
+	if(tail == d.length){
 	    tail = 0;
 	}
-	array[tail] = value;
+	d[tail] = value;
 	size++;
 
     }
@@ -47,9 +50,9 @@ public class MyDeque<T>{
 	    throw new NoSuchElementException();
 	}
 	size --;
-	T first = (T)array[head];
+	T first = (T)d[head];
 	head ++;
-	if (head == array.length){
+	if (head == d.length){
 	    head = 0;
 	}
 	return first;	
@@ -60,30 +63,30 @@ public class MyDeque<T>{
 	    throw new NoSuchElementException();
 	}
 	size --;
-	T last = (T)array[tail];
+	T last = (T)d[tail];
 	tail --;
 	if (tail == -1){
-	    tail = array.length - 1;
+	    tail = d.length - 1;
 	}
 	return last;
     }
     
     public void expand(){
-	Object[] a = new Object[array.length * 2];
+	Object[] a = new Object[d.length * 2];
 	if (head < tail){
 	    for (int i = head; i <= tail; i ++){
-		a[i] = array[i];
+		a[i] = d[i];
 	    }
 	}else{
-	    for (int i = head; i < array.length; i ++){
-		a[i] = array[i];
+	    for (int i = head; i < d.length; i ++){
+		a[i] = d[i];
 	    }
 	    for (int i = 0; i <= tail; i ++){
-		a[i + array.length] = array[i];
+		a[i + d.length] = d[i];
 	    }
-	    tail += array.length;
+	    tail += d.length;
 	}
-        array = a;
+        d = a;
     }    
 
     public String toString(){
@@ -91,14 +94,14 @@ public class MyDeque<T>{
 	if (size > 0){
 	    if (head <= tail){
 		for (int i = head; i <= tail; i ++){
-		    s += array[i] + " ";
+		    s += d[i] + " ";
 		}
 	    }else{
-		for (int i = head; i < array.length; i ++){
-		    s += array[i] + " ";
+		for (int i = head; i < d.length; i ++){
+		    s += d[i] + " ";
 		}
 		for (int i = 0; i <= tail; i ++){
-		    s += array[i] + " ";
+		    s += d[i] + " ";
 		}
 	    }
 	}
@@ -106,16 +109,16 @@ public class MyDeque<T>{
     }
 
     public void add(T value, int p){
-	if (size == array.length){
+	if (size == d.length){
 	    expand();
 	    expandPriority();
 	}
-	addLast(value);
-	priority[tail] = p;
+	addFirst(value);
+	priority[head] = p;
     }
 
     public void expandPriority(){
-	int[] a = new int[array.length * 2];
+	int[] a = new int[d.length * 2];
 	if (head < tail){
 	    for (int i = head; i <= tail; i ++){
 		a[i] = priority[i];
@@ -137,13 +140,13 @@ public class MyDeque<T>{
 	}
 	int smallest = priority[head];
 	int index = head;
-        Object remove = array[head];
+        Object remove = d[head];
 	if (head < tail){
 	    for (int i = head; i <= tail; i ++){
 		if (priority[i] < smallest){
 		    smallest = priority[i];
 		    index = i;
-		    remove = array[i];
+		    remove = d[i];
 		}
 	    }
 	}else{
@@ -151,21 +154,21 @@ public class MyDeque<T>{
 		if (priority[i] < smallest){
 		    smallest = priority[i];
 		    index = i;
-		    remove = array[i];
+		    remove = d[i];
 		}
 	    }
 	    for (int i = 0; i <= tail; i ++){
 		if (priority[i] < smallest){
 		    smallest = priority[i];
 		    index = i;
-		    remove = array[i];
+		    remove = d[i];
 		}
 	    }
 	}
-	array[index] = array[head];
+        d[index] = d[head];
 	priority[index] = priority[head];
 	head ++;
-	if (head == array.length){
+	if (head == d.length){
 	    head = 0;
 	}
 	size --;
@@ -173,28 +176,31 @@ public class MyDeque<T>{
 
     }
     
-    public boolean solveDFS(){
-	return solve(0,false);
+    public String toStringPriority(){
+	String s = "[ ";
+	if (size > 0){
+	    if (head <= tail){
+		for (int i = head; i <= tail; i ++){
+		    s += priority[i] + " ";
+		}
+	    }else{
+		for (int i = head; i < priority.length; i ++){
+		    s += priority[i] + " ";
+		}
+		for (int i = 0; i <= tail; i ++){
+		    s += priority[i] + " ";
+		}
+	    }
+	}
+	return s + "]";
     }
-
-    public boolean solveBFS(){
-	return solve(1, false);
-    }
-
-    public boolean solveDFS(boolean animate){
-	return (0, animate);
-    }
-
-    public boolean solveBFS(boolean animate){
-	return solve(1, animate);
-    }
-
-
-
 
     public static void main(String[] args){
 	
 	MyDeque<String> d = new MyDeque<String>();
+	d.add("ayyy", 4);
+	d.add("lmao", 3);
+	d.add("goobity", 2);
 	System.out.println(d);
 
     }
