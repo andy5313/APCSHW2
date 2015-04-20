@@ -108,10 +108,10 @@ public class MyDeque<T>{
 	return s + "]";
     }
 
-    public void add(T value, int p){
+    public void addPriority(T value, int p){
 	if (size == d.length){
-	    expand();
 	    expandPriority();
+	    expand();
 	}
 	addFirst(value);
 	priority[head] = p;
@@ -195,15 +195,6 @@ public class MyDeque<T>{
 	return s + "]";
     }
 
-    public static void main(String[] args){
-	
-	MyDeque<String> d = new MyDeque<String>();
-	d.add("ayyy", 4);
-	d.add("lmao", 3);
-	d.add("goobity", 2);
-	System.out.println(d);
-
-    }
     
 
 }

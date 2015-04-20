@@ -31,9 +31,9 @@ public class Frontier{
 	}else if(mode == BFS){
 	    d.addLast(c);
 	}else if (mode == Best){
-	    d.add(c, Math.abs(endx - cx) + Math.abs(endy - cy));
+	    d.addPriority(c, Math.abs(endx - cx) + Math.abs(endy - cy));
 	}else{
-	    d.add(c, Math.abs(endx - cx) + Math.abs(endy - cy) + c.getStepsTaken());
+	    d.addPriority(c, Math.abs(endx - cx) + Math.abs(endy - cy) + c.getStepsTaken());
 	}
     }
 

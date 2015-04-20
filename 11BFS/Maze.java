@@ -58,7 +58,7 @@ public class Maze{
     }
 
     public String toString(){
-	String ans = "" + maxy + " rows by " + maxx + " columns\n";
+	String ans = "" + maxy + " rows " + maxx + " columns\n";
 	for (int y = 0; y < maxy; y ++){
 	    for (int x = 0; x < maxx; x ++){
 		ans += maze[x][y];
@@ -98,7 +98,18 @@ public class Maze{
     public boolean solveBFS(boolean animate){
 	return solve(1, animate);
     }
- 
+    public boolean solveBest(){
+	return solveBest(false);
+    }
+    public boolean solveBest(boolean animate){
+	return solve(2, animate);
+    }
+    public boolean solveAStar(){
+	return solveAStar(false);
+    }
+    public boolean solveAStar(boolean animate){
+	return solve(3, animate);
+    }
 
 
     public boolean solve(int mode, boolean animate){
@@ -140,27 +151,17 @@ public class Maze{
 		    cord.setPrev(current);
 		    int cx = cord.getX();
 		    int cy = cord.getY();
-		    if (mode == DFS || mode == BFS){
-			if (inMaze(cx,cy) && isValid(cx, cy)){
-			    f.add(cord);
-			}
-		    }else if (mode == Best){
-			if (inMaze(cx, cy) && isValid(cx, cy)){
-			    f.add(cord, abs(endx-cx) + abs(endy-cy));
-			}
-		    }else if (mode == AStar){
-			if (inMaze(cx, cy) && isValid(cx, cy)){
-			    f.add(cord, abs(endx-cx) + abs(endy-cy) + stepsTaken);
-			}
-		    }	
-		}
-	    } 
-	    if (mode == AStar){
-		stepsTaken ++;
+		    if (inMaze(cx,cy) && isValid(cx,cy)){
+			f.add(cord);
+		    }
+		}	
 	    }
 	}
+	
+
 	System.out.println("No Solution\n");
 	return false;
+	
     }
 
     public void clearPath(){
@@ -220,8 +221,8 @@ public class Maze{
 	}	
     }
 
-    public static void main(String[]args){
-	
+    public int[] solution(){
+	return solutionCoor;
     }
 
 }
