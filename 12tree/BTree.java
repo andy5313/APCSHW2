@@ -125,11 +125,17 @@ public class BTree<E> {
       Returns:  The height of the tree rooted at node curr
       
       ====================*/
-    public int getHeight( TreeNode<E> curr ) {
-	return -1;
+    public int getHeight(TreeNode<T> curr){
+	return getHeight(curr, 0);
     }
-
-    /*======== public String getLevel() ==========
+    private int getHeight(TreeNode<T> curr, int currHeight) {
+	if (curr == null){
+	    return currHeight;
+	}else{
+	    return Math.max(getHeight(curr.getLeft(), currHeight + 1), getHeight(curr.getRight(), currHeight + 1));
+	}
+    }   
+ /*======== public String getLevel() ==========
       Inputs:   TreeNode<E> curr
                 int level
                 int currLevel  
