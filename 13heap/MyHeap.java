@@ -1,7 +1,9 @@
+import java.util.*;
+import java.io.*;
+
 public class MyHeap{
 
     private int[] heap;
-    private int size;
     private boolean isMax;
 
     public MyHeap(){
@@ -9,7 +11,7 @@ public class MyHeap{
     }
     public MyHeap(boolean isMax){
 	heap = new int[10];
-	size = 0;
+	heap[0] = 0;
 	this.isMax = isMax;
     }
     
@@ -20,17 +22,23 @@ public class MyHeap{
     public void swap(int first, int second){
 	int saved = heap[first];
 	heap[first] = heap[second];
-	heap[b] = saved;
+	heap[second] = saved;
     }
 
     public void add(int n){
+	if (heap[0] == heap.length-1) {
+	    resize();
+	}
 
-
-    }
-
-    public int remove(){
-}
-	
+	heap[0] = heap[0]+1;
+	heap[heap[0]]= n;
+	int i = heap[heap[0]];
+	while (i / 2 > 0){
+	    if (heap[i] > heap[i / 2]){
+		swap(i, i / 2);
+	    }
+	    i = i /2;
+	}
     }
 
     public int peek(){
@@ -49,8 +57,18 @@ public class MyHeap{
 	return ret;
     }
 
+    private void resize(){ 
+	int[] copy = Arrays.copyOf(heap, heap.length*2);
+	heap = copy;
+    }
+
     public static void main(String[]args){
+	MyHeap h = new MyHeap();
 	
+	h.add(5);
+	h.add(8);
+	h.add(3);
+	System.out.println(h);	
     }
 
 }
