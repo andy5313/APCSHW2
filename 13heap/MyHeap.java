@@ -19,6 +19,17 @@ public class MyHeap{
 	return "andy.zheng";
     }
 
+    public int getLeft(int n){
+	return n * 2;
+    }
+
+    public int getRight(int n){
+	return n*2 + 1;
+    }
+
+    public int getRoot(int n){
+	return n / 2;
+    }
     public void swap(int first, int second){
 	int saved = heap[first];
 	heap[first] = heap[second];
@@ -32,17 +43,31 @@ public class MyHeap{
 
 	heap[0] = heap[0]+1;
 	heap[heap[0]]= n;
+	
 	int i = heap[heap[0]];
-	while (i / 2 > 0){
-	    if (heap[i] > heap[i / 2]){
-		swap(i, i / 2);
+	while (getRoot(i) > 0){
+	    int rootIn = getRoot(i);
+	    if (!inOrder(rootIn, i)){
+		swap(i, rootIn);
 	    }
-	    i = i /2;
+	    i = rootIn;
+	}
+    }
+
+    private boolean inOrder(int parent, int child){
+	if (isMax){
+	    return (heap[parent] > heap[child]);
+	}else{
+	    return (heap[parent] < heap[child]);
 	}
     }
 
     public int peek(){
-	return heap[1];
+	if (heap[0]==0){
+	    throw new NoSuchElementException();
+	}else{
+	    return heap[1];
+	}
     }
 
     public String toString(){
@@ -68,6 +93,7 @@ public class MyHeap{
 	h.add(5);
 	h.add(8);
 	h.add(3);
+	h.add(9);
 	System.out.println(h);	
     }
 
