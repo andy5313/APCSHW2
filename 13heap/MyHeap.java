@@ -54,6 +54,57 @@ public class MyHeap{
 	}
     }
 
+    public int remove(){
+	int size = heap[0];
+	if (size == 0){
+	    throw new NoSuchElementException();
+	} else {
+	    int ret = heap[1];
+	    heap[1] = heap[size];
+	    heap[0] = size--;
+	    swapMax(1);
+	    return ret;
+	}
+    }
+
+    public void swapMax(int i){
+	int size = heap[0];
+	while (getLeft(i) <= size){ //while value has a left child
+	    int l = getLeft(i);
+	    int r = getRight(i);
+	    if (r <= size){ //if value has a right child
+		if (!inOrder(i, l) || !inOrder(i, l)){
+		    int dif = heap[l] - heap[r];
+		    if (isMax){
+			if (dif > 0){
+			    swap(i, l);
+			    i = l;
+			}else if (dif < 0){
+			    swap(i, r);
+			    i = r;
+			}
+		    }else{
+			if (dif < 0){
+			    swap(i, l);
+			    i = l;
+			}else{
+			    swap(i, r);
+			    i = r;
+			}
+		    }
+		}else{
+		    return;
+		}
+	    }else if (!inOrder(i, l)){
+		swap(i, l);
+		i = l;
+	    }else{
+		return;
+	    }
+	}
+        
+    }
+
     private boolean inOrder(int parent, int child){
 	if (isMax){
 	    return (heap[parent] > heap[child]);
@@ -94,7 +145,10 @@ public class MyHeap{
 	h.add(8);
 	h.add(3);
 	h.add(9);
-	System.out.println(h);	
+	System.out.println(h);
+	h.remove();
+	System.out.println(h);
+       
     }
 
 }
