@@ -19,6 +19,10 @@ public class MyHeap{
 	return "andy.zheng";
     }
 
+    public int getParent(int n){
+	return n / 2;
+    }
+
     public int getLeft(int n){
 	return n * 2;
     }
@@ -27,9 +31,6 @@ public class MyHeap{
 	return n*2 + 1;
     }
 
-    public int getRoot(int n){
-	return n / 2;
-    }
     public void swap(int first, int second){
 	int saved = heap[first];
 	heap[first] = heap[second];
@@ -45,12 +46,12 @@ public class MyHeap{
 	heap[heap[0]]= n;
 	
 	int i = heap[heap[0]];
-	while (getRoot(i) > 0){
-	    int rootIn = getRoot(i);
-	    if (!inOrder(rootIn, i)){
-		swap(i, rootIn);
+	while (getParent(i) > 0){
+	    int parent = getParent(i);
+	    if (!inPosition(parent, i)){
+		swap(i, parent);
 	    }
-	    i = rootIn;
+	    i = parent;
 	}
     }
 
@@ -59,32 +60,39 @@ public class MyHeap{
 	if (size == 0){
 	    throw new NoSuchElementException();
 	} else {
-	    int ret = heap[1];
+	    int removed = heap[1];
 	    heap[1] = heap[size];
+	    shiftDown(1);
 	    heap[0] = size--;
-	    swapMax(1);
-	    return ret;
+	    return removed;
 	}
     }
 
-    public void swapMax(int i){
+    public boolean hasLeft(int i){
+	return (getLeft(i) <= heap[0]);
+    }
+
+    public boolean hasRight(int i){
+	return (getRight(i) <= heap[0]);
+    }
+
+    private void shiftDown(int i){
 	int size = heap[0];
-	while (getLeft(i) <= size){ //while value has a left child
+	while (hasLeft(i) == true){ 
 	    int l = getLeft(i);
 	    int r = getRight(i);
-	    if (r <= size){ //if value has a right child
-		if (!inOrder(i, l) || !inOrder(i, l)){
-		    int dif = heap[l] - heap[r];
-		    if (isMax){
-			if (dif > 0){
+	    if (hasRight(i) == true){ 
+		if (!inPosition(i, l) || !inPosition(i, l)){
+		    if (isMax = true){
+			if (heap[l]> heap[r]){
 			    swap(i, l);
 			    i = l;
-			}else if (dif < 0){
+			}else if (heap[l] < heap[r]){
 			    swap(i, r);
 			    i = r;
 			}
 		    }else{
-			if (dif < 0){
+			if (heap[l] < heap[r]){
 			    swap(i, l);
 			    i = l;
 			}else{
@@ -95,21 +103,28 @@ public class MyHeap{
 		}else{
 		    return;
 		}
-	    }else if (!inOrder(i, l)){
+	    }else if (!inPosition(i, l)){
 		swap(i, l);
 		i = l;
 	    }else{
 		return;
 	    }
 	}
-        
     }
 
-    private boolean inOrder(int parent, int child){
+    private boolean inPosition(int parent, int child){
 	if (isMax){
-	    return (heap[parent] > heap[child]);
+	    if (heap[child] < heap[parent]){
+		return true;
+	    }else {
+		return false;
+	    }
 	}else{
-	    return (heap[parent] < heap[child]);
+	    if (heap[child] > heap[parent]){
+		return true;
+	    }else {
+		return false;
+	    }
 	}
     }
 
@@ -122,15 +137,11 @@ public class MyHeap{
     }
 
     public String toString(){
-	String ret = "";
-	
-	ret += "[";
+	String ret = "[";
 	for (int i = 1; i <= heap[0]; i ++){
 	    ret += " " + heap[i];
-	}
-	ret += " ]";
-	
-	return ret;
+	}	
+	return ret + " ]";
     }
 
     private void resize(){ 
